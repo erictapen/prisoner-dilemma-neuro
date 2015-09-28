@@ -28,7 +28,7 @@ public class Breeder {
 	private void reproduceFittest() {
 		while(pool.size() < Settings.POPULATION_SIZE) {
 			int i = (int)(Math.random()*pool.size());
-			Prisoner descendant = pool.get(i).clone();
+			//TODO add cloned and mutated object
 		}
 	}
 

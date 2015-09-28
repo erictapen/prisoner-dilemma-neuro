@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collections;
 
 
 public class Prisoner {
@@ -96,13 +95,6 @@ public class Prisoner {
 			double message = this.commOutputNeurons.get(i).getActivation();
 			p.getCommInputNeurons().get(i).setActivation(message);
 		}
-	}
-	
-	public Object clone() {
-		ArrayList<Neuron> newNeurons = new ArrayList<Neuron>();
-		for(Neuron x : this.neurons) newNeurons.add(x.clone());
-		Prisoner copy = new Prisoner()
-		return null;
 	}
 	
 	private double gaussian(double my, double sigma) {

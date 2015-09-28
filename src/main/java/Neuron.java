@@ -57,10 +57,6 @@ public class Neuron {
 		newChild.getWeights().add(newWeight);
 		newChild.getParents().add(this);
 	}
-	
-	public Object clone() {
-		
-	}
 
 	public double getOldActivation() {
 		return oldActivation;
