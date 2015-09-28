@@ -1,5 +1,7 @@
+import java.util.ArrayList;
 
-public static class Director {
+
+public class Director {
 	public static void updateFitness(ArrayList<Neuron> pool) {
 		
 	}

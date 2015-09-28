@@ -81,6 +81,12 @@ public class Prisoner {
 		}
 	}
 	
+	public void randomizeActivations() {
+		for(Neuron x : this.neurons) {
+			x.setActivation(Math.random()*2 - 1);
+		}
+	}
+	
 	private double gaussian(double my, double sigma) {
 		return my;
 	}
