@@ -86,6 +86,16 @@ public class Prisoner {
 			x.setActivation(Math.random()*2 - 1);
 		}
 	}
+
+	/** One way messag from this to p
+	 * @param p2
+	 */
+	public void communicateTo(Prisoner p) {
+		for (int i = 0; i < this.commOutputNeurons.size(); i++) {
+			double message = this.commOutputNeurons.get(i).getActivation();
+			p.getCommInputNeurons().get(i).setActivation(message);
+		}
+	}
 	
 	private double gaussian(double my, double sigma) {
 		return my;
@@ -94,6 +104,19 @@ public class Prisoner {
 	public ArrayList<Neuron> getNeurons() {
 		return neurons;
 	}
+
+	public ArrayList<Neuron> getCommInputNeurons() {
+		return commInputNeurons;
+	}
+
+	public ArrayList<Neuron> getCommOutputNeurons() {
+		return commOutputNeurons;
+	}
+
+	public Neuron getAnswerNeuron() {
+		return answerNeuron;
+	}
+	
 	
 	
 	

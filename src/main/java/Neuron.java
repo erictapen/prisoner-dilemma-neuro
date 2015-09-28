@@ -71,7 +71,9 @@ public class Neuron {
 		return id;
 	}
 	
-	
+	public boolean isActivated() {
+		return this.activation > 0;
+	}
 	
 	
 	
