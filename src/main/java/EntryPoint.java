@@ -10,7 +10,7 @@ public class EntryPoint {
 		FileHandler.exportPoolToFile("test.json", brdr);
 		
 		//plot a fitness chart over evolution steps
-		FitnessVisualizer demo = new FitnessVisualizer("Line Chart Demo 6", brdr.maxFitnessrecord, 
+		FitnessVisualizer demo = new FitnessVisualizer("Fitness over evolution steps", brdr.maxFitnessrecord, 
 				brdr.minFitnessrecord, brdr.meanFitnessrecord);
         demo.pack();
         RefineryUtilities.centerFrameOnScreen(demo);
