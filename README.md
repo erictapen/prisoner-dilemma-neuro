@@ -12,6 +12,7 @@ To run the program, enter
 ``` 
 java -jar target/prisoner-dilemma-neuro-VERSION.jar
 ``` 
+In order to change settings, modify the file `src/main/java/Settings.java` and rebuild.
 ## Windows 
 Unfortunately, I don't have a step-by-step solution here. You might get it running using Maven. If you got a working solution, please create a Pull Request! 
 
