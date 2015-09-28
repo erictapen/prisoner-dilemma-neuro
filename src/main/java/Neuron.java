@@ -12,8 +12,10 @@ public class Neuron {
 	
 	private double oldActivation;
 	
+	private int id;
 	
-	public Neuron(double activation) {
+	
+	public Neuron(double activation, int id) {
 		super();
 		this.activation = activation;
 		this.oldActivation = 0.0;
@@ -64,6 +66,12 @@ public class Neuron {
 	public ArrayList<Double> getWeights() {
 		return weights;
 	}
+
+	public int getId() {
+		return id;
+	}
+	
+	
 	
 	
 	

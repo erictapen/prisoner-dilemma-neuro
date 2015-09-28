@@ -33,7 +33,7 @@ public class Prisoner {
 		int n = (int) Math.round(gaussian(amount, amount/2.0));
 		
 		for (int i = 0; i < n; i++) {
-			Neuron neuron = new Neuron(Math.random() * 2 - 1);
+			Neuron neuron = new Neuron(Math.random() * 2 - 1, i);
 			this.neurons.add(neuron);
 		}
 		
@@ -84,5 +84,11 @@ public class Prisoner {
 	private double gaussian(double my, double sigma) {
 		return my;
 	}
+
+	public ArrayList<Neuron> getNeurons() {
+		return neurons;
+	}
+	
+	
 	
 }
