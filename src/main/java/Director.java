@@ -32,8 +32,8 @@ public class Director {
 	}
 	
 	private static ArrayList<Integer> runMatch(Prisoner p1, Prisoner p2) {
-		p1.randomizeActivations();
-		p2.randomizeActivations();
+		p1.resetActivations();
+		p2.resetActivations();
 		for (int i = 0; i < Settings.THINKING_STEPS; i++) {
 			p1.update();
 			p2.update();

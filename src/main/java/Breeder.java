@@ -8,6 +8,14 @@ import com.google.gson.Gson;
 public class Breeder {
 	ArrayList<Prisoner> pool = new ArrayList<Prisoner>();
 	
+	Comparator prisonerCompare = new Comparator<Prisoner>() {
+        @Override public int compare(Prisoner p1, Prisoner p2) {
+        	int res = 0;
+        	if (p1.getFitness() > p2.getFitness()) res = 1;
+            return res; // Ascending
+        }
+	};
+	
 	public Breeder(int populationSize) {
 		generateRandomPool(populationSize);
 	}
@@ -17,7 +25,7 @@ public class Breeder {
 		for (int i = 0; i < populationSize; i++) {
 			Prisoner p = new Prisoner(Settings.COMMUNICATION_NEURONS, Settings.NEURONS_AMOUNT, Settings.CONNECTIVITY);
 			pool.add(p);
-			if(i%1 == 0) System.out.println(i);
+			if (i % 100 == 0) System.out.println("Prisoner " + i + " created.");
 		}	
 		System.out.println("Done.");
 	}
@@ -28,16 +36,31 @@ public class Breeder {
 			Director.updateFitness(pool);
 			selectFittest();
 			reproduceFittest();
+			evaluate();
 			System.out.println("Evolution round " + (i+1) + " finished.");
 		}
 	}
 	
+	private void evaluate() {
+		double maxFitness = Collections.max(pool, prisonerCompare).getFitness();
+		double minFitness = Collections.min(pool, prisonerCompare).getFitness();
+		double meanFitness = 0.0;
+		for (Prisoner prisoner : pool) {
+			meanFitness += prisoner.getFitness();
+		}
+		meanFitness /= pool.size();
+		
+		System.out.println("The max Fitness is: " + maxFitness);
+		System.out.println("The min Fitness is: " + minFitness);
+		System.out.println("The mean Fitness is: " + meanFitness);
+	}
+
 	private void reproduceFittest() {
 		Gson gson = new Gson();
 		while(pool.size() < Settings.POPULATION_SIZE) {
 			int i = (int)(Math.random()*pool.size());
 			Prisoner newPris = gson.fromJson(gson.toJson(pool.get(i), Prisoner.class), Prisoner.class);
-			//TODO mutate object
+			newPris.mutate();
 			pool.add(newPris);
 		}
 	}
@@ -46,13 +69,7 @@ public class Breeder {
 	 * 
 	 */
 	private void selectFittest() {
-		Collections.sort(pool, new Comparator<Prisoner>() {
-	        @Override public int compare(Prisoner p1, Prisoner p2) {
-	        	int res = 0;
-	        	if (p1.getFitness() > p2.getFitness()) res = 1;
-	            return res; // Ascending
-	        }
-	    });
+		Collections.sort(pool, prisonerCompare);
 		
 		for (int i = pool.size(); i < (int) (pool.size() * Settings.TRUNCATION); i--) {
 			pool.remove(i);

@@ -1,8 +1,11 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class Prisoner {
 	private ArrayList<Neuron> neurons = new ArrayList<Neuron>();
+	
+	private ArrayList<Double> initialActivations = new ArrayList<Double>();
 	
 	private Neuron answerNeuron;
 	
@@ -13,59 +16,71 @@ public class Prisoner {
 	private double fitness;
 	
 	public Prisoner(ArrayList<Neuron> neurons, Neuron answerNeuron, ArrayList<Neuron> commInputNeurons,
-			ArrayList<Neuron> commOutputNeurons, double fitness) {
+			ArrayList<Neuron> commOutputNeurons, ArrayList<Double> initialActivations, double fitness) {
 		super();
 		this.neurons = neurons;
 		this.answerNeuron = answerNeuron;
 		this.commInputNeurons = commInputNeurons;
 		this.commOutputNeurons = commOutputNeurons;
+		this.initialActivations = initialActivations;
 		this.fitness = fitness;
 	}
 	
 	public Prisoner(int communicationNeurons, int amount, int connectivity) {
-		
 		int n = (int) Math.round(gaussian(amount, amount/2.0));
-		System.out.println("gaussian done" + n);
+				
 		for (int i = 0; i < n; i++) {
-			Neuron neuron = new Neuron(Math.random() * 2 - 1, i);
+			initialActivations.add(Math.random() * 2 - 1);
+			Neuron neuron = new Neuron(initialActivations.get(i), i);
 			this.neurons.add(neuron);
 		}
-		System.out.println("Prisoner has " + this.neurons.size() + " neurons.");
 		
 		generateConnections(connectivity);
 		//output and input neurons should not intersect
 		ArrayList<Neuron> specialNeurons = getRandomNeurons(2*communicationNeurons + 1);
-		this.commInputNeurons = (ArrayList<Neuron>) specialNeurons.subList(0, communicationNeurons-1);
-		this.commOutputNeurons = (ArrayList<Neuron>) specialNeurons.subList(communicationNeurons, 2*communicationNeurons-1);
-		this.answerNeuron = specialNeurons.get(2*communicationNeurons);
+		for (int i = 0; i < specialNeurons.size(); i++) {
+			if (i < communicationNeurons - 1)
+				this.commInputNeurons.add(specialNeurons.get(i));
+			else if (i > communicationNeurons && i < 2*communicationNeurons - 1)
+				this.commOutputNeurons.add(specialNeurons.get(i));
+			else
+				this.answerNeuron = specialNeurons.get(i);
+		}
+	}
+
+	private void generateConnections(int connectivity) {
+		for (int i = 0; i < neurons.size(); i++) {
+			int connections = (int) Math.round(gaussian(connectivity, connectivity/2.0));
+			//System.out.println("will do " + connections + " connections.");
+			ArrayList<Neuron> newParents = getRandomNeurons(connections);
+			for(Neuron parent : newParents) {
+				parent.connect(neurons, i, Math.random()*2 - 1.0);
+			}
+		}
 	}
 	
 	private ArrayList<Neuron> getRandomNeurons(int n) {
+		if(n > this.neurons.size()) {
+			System.out.println("There are too many Communication Neurons.");
+			n = this.neurons.size();
+		}
+		
+		ArrayList<Integer> numbers = getRandomNumbers();
+		
 		ArrayList<Neuron> res = new ArrayList<Neuron>();
 		for (int i = 0; i < n; i++) {
-			Neuron toAdd = this.neurons.get((int) Math.random()*this.neurons.size());
-			if(!res.contains(toAdd)) res.add(toAdd);
-			else i--;
+			res.add(neurons.get(numbers.get(i)));
 		}
 		return res;
 	}
 
-	private void generateConnections(int connectivity) {
-		for (Neuron x : this.neurons) {
-			int connections = (int) Math.round(gaussian(connectivity, connectivity/2.0));
-			if(connections > this.neurons.size()) connections = this.neurons.size();
-			System.out.println("will do " + connections + " connections.");
-			ArrayList<Neuron> newParents = new ArrayList<Neuron>();
-			for (int i = 0; i < connections; i++) {
-				//TODO at this point the program enters an endless loop
-				Neuron toAdd = this.neurons.get((int) Math.random()*this.neurons.size());
-				if(!(newParents.contains(toAdd))) newParents.add(toAdd);
-				else i--;
-			}
-			for(Neuron parent : newParents) {
-				parent.connect(x, Math.random()*2 - 1.0);
-			}
+	private ArrayList<Integer> getRandomNumbers() {
+		ArrayList<Integer> numbers = new ArrayList<Integer>();
+		for (int i = 0; i < neurons.size(); i++) {
+			numbers.add(i);
 		}
+		Collections.shuffle(numbers);
+		return numbers;
 	}
 
 	public void update() {
@@ -73,15 +88,44 @@ public class Prisoner {
 			x.prepareNextStep();
 		}
 		for(Neuron x : this.neurons) {
-			x.update();
+			x.update(neurons);
+		}
+	}
+
+	public void mutate() {
+		int mutations = (int) gaussian(Settings.MUTATION_RATE, Settings.MUTATION_RATE/2);
+		
+		for (int i = 0; i < mutations; i++) {
+			double mutationType = Math.random();
+			if (mutationType < Settings.WEIGHT_MUTATION_PROPABILITY) {
+				neurons.get((int) Math.random() * neurons.size()).mutateWeights();
+			} else if (mutationType > Settings.CONNECTION_MUTATION_PROPABILITY
+					&& mutationType < Settings.WEIGHT_MUTATION_PROPABILITY + Settings.CONNECTION_MUTATION_PROPABILITY){
+				neurons.get((int) Math.random() * neurons.size()).mutateConnections(neurons, Settings.NUMBER_OF_CONNECTION_MUTATIONS);
+			} else {
+				this.mutateInitialActivations();
+			}
+		}
+		
+	}
+
+	public void resetActivations() {
+		for (int i = 0; i < this.neurons.size(); i++) {
+			this.neurons.get(i).setActivation(this.initialActivations.get(i));
+		}
+	}
+
+	public void mutateInitialActivations() {
+		for (int i = 0; i < initialActivations.size(); i++) {
+			initialActivations.set(i, Math.random() * 2 - 1);
 		}
 	}
 	
-	public void randomizeActivations() {
+	/*public void randomizeActivations() {
 		for(Neuron x : this.neurons) {
 			x.setActivation(Math.random()*2 - 1);
 		}
-	}
+	}*/
 
 	/** One way messag from this to p
 	 * @param p2
@@ -120,9 +164,5 @@ public class Prisoner {
 	public void setFitness(double fitness) {
 		this.fitness = fitness;
 	}
-
-	
-	
-	
 	
 }

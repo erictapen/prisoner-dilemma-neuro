@@ -15,7 +15,7 @@ public class FileHandler {
 		// convert java object to JSON format,
 		// and returned as JSON formatted string
 		String json = gson.toJson(brdr);
-
+		
 		try {
 			//write converted json data to a file named "file.json"
 			FileWriter writer = new FileWriter(ofile);
