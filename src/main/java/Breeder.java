@@ -8,7 +8,12 @@ import com.google.gson.Gson;
 public class Breeder {
 	ArrayList<Prisoner> pool = new ArrayList<Prisoner>();
 	
-	Comparator prisonerCompare = new Comparator<Prisoner>() {
+	public ArrayList<Double> maxFitnessrecord = new ArrayList<Double>();
+	public ArrayList<Double> minFitnessrecord = new ArrayList<Double>();
+	public ArrayList<Double> meanFitnessrecord = new ArrayList<Double>();
+	
+	
+	Comparator<Prisoner> prisonerCompare = new Comparator<Prisoner>() {
         @Override public int compare(Prisoner p1, Prisoner p2) {
         	int res = 0;
         	if (p1.getFitness() > p2.getFitness()) res = 1;
@@ -53,6 +58,10 @@ public class Breeder {
 		System.out.println("The max Fitness is: " + maxFitness);
 		System.out.println("The min Fitness is: " + minFitness);
 		System.out.println("The mean Fitness is: " + meanFitness);
+		
+		this.maxFitnessrecord.add(maxFitness);
+		this.minFitnessrecord.add(minFitness);
+		this.meanFitnessrecord.add(meanFitness);
 	}
 
 	private void reproduceFittest() {

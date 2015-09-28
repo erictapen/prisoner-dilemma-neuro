@@ -12,7 +12,7 @@ public final class Settings {
 	
 	public static final double TRUNCATION = 0.3;
 
-	public static final int EVOLUTION_STEPS = 1000;
+	public static final int EVOLUTION_STEPS = 10;
 
 	public static final double MUTATION_RATE = 10;
 	public static final double WEIGHT_MUTATION_PROPABILITY = 0.7;
