@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import com.google.gson.Gson;
+
 
 public class Breeder {
 	ArrayList<Prisoner> pool = new ArrayList<Prisoner>();
@@ -26,9 +28,12 @@ public class Breeder {
 	}
 	
 	private void reproduceFittest() {
+		Gson gson = new Gson();
 		while(pool.size() < Settings.POPULATION_SIZE) {
 			int i = (int)(Math.random()*pool.size());
-			//TODO add cloned and mutated object
+			Prisoner newPris = gson.fromJson(gson.toJson(pool.get(i), Prisoner.class), Prisoner.class);
+			//TODO mutate object
+			pool.add(newPris);
 		}
 	}
 
