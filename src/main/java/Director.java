@@ -2,14 +2,41 @@ import java.util.ArrayList;
 
 
 public class Director {
-	public static void updateFitness(ArrayList<Neuron> pool) {
-		
+	
+	public final static int THINKINGSTEPS = 100;
+	public final static double FIGHTPERCENTAGE = 0.5;
+	
+	/**
+	 * @param pool
+	 * @param fightPercentage The likelihood, that a certain prisoner fights against another one
+	 */
+	public static void updateFitness(ArrayList<Prisoner> pool) {
+		int iterations = (int)(FIGHTPERCENTAGE*pool.size());
+		ArrayList<Integer> scores = new ArrayList<Integer>();
+		ArrayList<Integer> plays = new ArrayList<Integer>();
+		for (int i = 0; i < pool.size(); i++) {
+			scores.add(new Integer(0));
+			plays.add(new Integer(0));
+		}
+		for(int i=0; i<pool.size(); i++) {
+			for (int j = 0; j < iterations; j++) {
+				Prisoner p2 = pool.get((int)(Math.random()*pool.size()));
+				ArrayList<Integer> matchResult = runMatch(pool.get(i), p2);
+				scores.set(i, new Integer(scores.get(i).intValue() + matchResult.get(0)));
+				scores.set(j, new Integer(scores.get(j).intValue() + matchResult.get(1)));
+				plays.set(i, new Integer(plays.get(i).intValue()+1));
+				plays.set(j, new Integer(plays.get(j).intValue()+1));
+			}
+		}
+		for (int i = 0; i < pool.size(); i++) {
+			pool.get(i).setFitness(((double)scores.get(i)) / plays.get(i));
+		}
 	}
 	
-	private static ArrayList<Integer> runMatch(Prisoner p1, Prisoner p2, int iterations) {
+	private static ArrayList<Integer> runMatch(Prisoner p1, Prisoner p2) {
 		p1.randomizeActivations();
 		p2.randomizeActivations();
-		for (int i = 0; i < iterations; i++) {
+		for (int i = 0; i < THINKINGSTEPS; i++) {
 			p1.update();
 			p2.update();
 			p1.communicateTo(p2);

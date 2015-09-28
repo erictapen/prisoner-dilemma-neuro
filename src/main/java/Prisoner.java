@@ -116,6 +116,14 @@ public class Prisoner {
 	public Neuron getAnswerNeuron() {
 		return answerNeuron;
 	}
+
+	public double getFitness() {
+		return fitness;
+	}
+
+	public void setFitness(double fitness) {
+		this.fitness = fitness;
+	}
 	
 	
 	
