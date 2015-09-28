@@ -1,3 +1,4 @@
+![This is the fitness function over evolution steps, plotted with jfreecharts](https://github.com/erictapen/prisoner-dilemma-neuro/blob/master/fitness_chart.png?raw=true)
 # Building from sources 
 ## GNU/Linux and OS X 
 Maven and Git are required. You propably know where to get it. If not, you might have luck with typing `sudo apt-get install git mvn` into a terminal. 
