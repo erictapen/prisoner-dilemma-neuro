@@ -30,6 +30,7 @@ public class Prisoner {
 			Neuron neuron = new Neuron(Math.random() * 2 - 1, i);
 			this.neurons.add(neuron);
 		}
+		System.out.println("Prisoner has " + this.neurons.size() + " neurons.");
 		
 		generateConnections(connectivity);
 		//output and input neurons should not intersect
@@ -50,13 +51,13 @@ public class Prisoner {
 	}
 
 	private void generateConnections(int connectivity) {
-		int connections = 0;
 		for (Neuron x : this.neurons) {
-			connections = (int) Math.round(gaussian(connectivity, connectivity/2.0));
+			int connections = (int) Math.round(gaussian(connectivity, connectivity/2.0));
 			if(connections > this.neurons.size()) connections = this.neurons.size();
 			System.out.println("will do " + connections + " connections.");
 			ArrayList<Neuron> newParents = new ArrayList<Neuron>();
 			for (int i = 0; i < connections; i++) {
+				//TODO at this point the program enters an endless loop
 				Neuron toAdd = this.neurons.get((int) Math.random()*this.neurons.size());
 				if(!(newParents.contains(toAdd))) newParents.add(toAdd);
 				else i--;
