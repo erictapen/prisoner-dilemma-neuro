@@ -3,15 +3,13 @@ import java.util.ArrayList;
 
 public class Director {
 	
-	public final static int THINKINGSTEPS = 100;
-	public final static double FIGHTPERCENTAGE = 0.5;
 	
 	/**
 	 * @param pool
 	 * @param fightPercentage The likelihood, that a certain prisoner fights against another one
 	 */
 	public static void updateFitness(ArrayList<Prisoner> pool) {
-		int iterations = (int)(FIGHTPERCENTAGE*pool.size());
+		int iterations = (int)(Settings.FIGHT_PERCENTAGE*pool.size());
 		ArrayList<Integer> scores = new ArrayList<Integer>();
 		ArrayList<Integer> plays = new ArrayList<Integer>();
 		for (int i = 0; i < pool.size(); i++) {
@@ -36,7 +34,7 @@ public class Director {
 	private static ArrayList<Integer> runMatch(Prisoner p1, Prisoner p2) {
 		p1.randomizeActivations();
 		p2.randomizeActivations();
-		for (int i = 0; i < THINKINGSTEPS; i++) {
+		for (int i = 0; i < Settings.THINKING_STEPS; i++) {
 			p1.update();
 			p2.update();
 			p1.communicateTo(p2);

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class Prisoner {
@@ -124,6 +125,7 @@ public class Prisoner {
 	public void setFitness(double fitness) {
 		this.fitness = fitness;
 	}
+
 	
 	
 	
