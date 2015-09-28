@@ -8,7 +8,7 @@ import com.google.gson.Gson;
 
 public class FileHandler {
 	
-	public void exportPoolToFile(String ofile, Breeder brdr) {
+	public static void exportPoolToFile(String ofile, Breeder brdr) {
 		Gson gson = new Gson();
 
 		// convert java object to JSON format,
@@ -28,7 +28,7 @@ public class FileHandler {
 		System.out.println(json);
 	}
 	
-	public Breeder importPoolFromFile(String ifile) {
+	public static Breeder importPoolFromFile(String ifile) {
 		Gson gson = new Gson();
 		Breeder res = null;
 		try {
