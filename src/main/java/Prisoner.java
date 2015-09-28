@@ -25,7 +25,7 @@ public class Prisoner {
 	public Prisoner(int communicationNeurons, int amount, int connectivity) {
 		
 		int n = (int) Math.round(gaussian(amount, amount/2.0));
-		
+		System.out.println("gaussian done" + n);
 		for (int i = 0; i < n; i++) {
 			Neuron neuron = new Neuron(Math.random() * 2 - 1, i);
 			this.neurons.add(neuron);
@@ -51,13 +51,14 @@ public class Prisoner {
 
 	private void generateConnections(int connectivity) {
 		int connections = 0;
-		ArrayList<Neuron> newParents = new ArrayList<Neuron>();
 		for (Neuron x : this.neurons) {
 			connections = (int) Math.round(gaussian(connectivity, connectivity/2.0));
-			
+			if(connections > this.neurons.size()) connections = this.neurons.size();
+			System.out.println("will do " + connections + " connections.");
+			ArrayList<Neuron> newParents = new ArrayList<Neuron>();
 			for (int i = 0; i < connections; i++) {
 				Neuron toAdd = this.neurons.get((int) Math.random()*this.neurons.size());
-				if(!newParents.contains(toAdd)) newParents.add(toAdd);
+				if(!(newParents.contains(toAdd))) newParents.add(toAdd);
 				else i--;
 			}
 			for(Neuron parent : newParents) {
