@@ -13,11 +13,13 @@ public class Breeder {
 	}
 
 	public void generateRandomPool(int populationSize){
+		System.out.println("Generating random prisoner pool with " + populationSize + " prisoners.");
 		for (int i = 0; i < populationSize; i++) {
 			Prisoner p = new Prisoner(Settings.COMMUNICATION_NEURONS, Settings.NEURONS_AMOUNT, Settings.CONNECTIVITY);
 			pool.add(p);
+			if(i%1 == 0) System.out.println(i);
 		}	
-		System.out.println("Generated random prisoner pool with " + populationSize + " prisoners.");
+		System.out.println("Done.");
 	}
 	
 	public void startEvolution(int generations){
