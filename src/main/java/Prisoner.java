@@ -98,6 +98,13 @@ public class Prisoner {
 		}
 	}
 	
+	public Object clone() {
+		ArrayList<Neuron> newNeurons = new ArrayList<Neuron>();
+		for(Neuron x : this.neurons) newNeurons.add(x.clone());
+		Prisoner copy = new Prisoner()
+		return null;
+	}
+	
 	private double gaussian(double my, double sigma) {
 		return my;
 	}

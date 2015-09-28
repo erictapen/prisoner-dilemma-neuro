@@ -21,6 +21,17 @@ public class Neuron {
 		this.oldActivation = 0.0;
 	}
 
+	public Neuron(ArrayList<Neuron> parents, ArrayList<Neuron> children, ArrayList<Double> weights, double activation,
+			double oldActivation, int id) {
+		super();
+		this.parents = parents;
+		this.children = children;
+		this.weights = weights;
+		this.activation = activation;
+		this.oldActivation = oldActivation;
+		this.id = id;
+	}
+
 	public void update() {
 		//cumulate
 		double sum = 0.0;
@@ -45,6 +56,10 @@ public class Neuron {
 		this.children.add(newChild);
 		newChild.getWeights().add(newWeight);
 		newChild.getParents().add(this);
+	}
+	
+	public Object clone() {
+		
 	}
 
 	public double getOldActivation() {

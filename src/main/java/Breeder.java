@@ -12,7 +12,7 @@ public class Breeder {
 
 	public void generateRandomPool(int populationSize){
 		for (int i = 0; i < populationSize; i++) {
-			Prisoner p = new Prisoner(Settings.COMMUNICATION_NEURONS, Settings.AMOUNT, Settings.CONNECTIVITY);
+			Prisoner p = new Prisoner(Settings.COMMUNICATION_NEURONS, Settings.NEURONS_AMOUNT, Settings.CONNECTIVITY);
 			pool.add(p);
 		}		
 	}
@@ -21,9 +21,20 @@ public class Breeder {
 		for (int i = 0; i < generations; i++) {
 			Director.updateFitness(pool);
 			selectFittest();
+			reproduceFittest();
 		}
 	}
 	
+	private void reproduceFittest() {
+		while(pool.size() < Settings.POPULATION_SIZE) {
+			int i = (int)(Math.random()*pool.size());
+			Prisoner descendant = pool.get(i).clone();
+		}
+	}
+
+	/**Removes the (1-TRUNCATION)*100 percent und keeps the TRUNCATION*100 percent
+	 * 
+	 */
 	private void selectFittest() {
 		Collections.sort(pool, new Comparator<Prisoner>() {
 	        @Override public int compare(Prisoner p1, Prisoner p2) {
