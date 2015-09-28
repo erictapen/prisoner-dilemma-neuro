@@ -15,9 +15,7 @@ public class Breeder {
 	
 	Comparator<Prisoner> prisonerCompare = new Comparator<Prisoner>() {
         @Override public int compare(Prisoner p1, Prisoner p2) {
-        	int res = 0;
-        	if (p1.getFitness() > p2.getFitness()) res = 1;
-            return res; // Ascending
+            return (int) Math.signum(p1.getFitness() - p2.getFitness()); // Ascending
         }
 	};
 	
