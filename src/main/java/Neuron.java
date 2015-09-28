@@ -2,15 +2,15 @@ import java.util.ArrayList;
 
 
 public class Neuron {
-	ArrayList<Neuron> parents = new ArrayList<Neuron>();
+	private ArrayList<Neuron> parents = new ArrayList<Neuron>();
 	
-	ArrayList<Neuron> children = new ArrayList<Neuron>();
+	private ArrayList<Neuron> children = new ArrayList<Neuron>();
 	
-	ArrayList<Double> weights = new ArrayList<Double>();
+	private ArrayList<Double> weights = new ArrayList<Double>();
 	
-	double activation;
+	private double activation;
 	
-	double oldActivation;
+	private double oldActivation;
 	
 	
 	public Neuron(double activation) {
@@ -35,10 +35,38 @@ public class Neuron {
 	public void prepareNextStep() {
 		this.oldActivation = this.activation;
 	}
+	
+	/** builds a new connection, pointing from this to newChild
+	 * @param newChild
+	 */
+	public void connect(Neuron newChild, double newWeight) {
+		this.children.add(newChild);
+		newChild.getWeights().add(newWeight);
+		newChild.getParents().add(this);
+	}
 
 	public double getOldActivation() {
 		return oldActivation;
 	}
+
+	public double getActivation() {
+		return activation;
+	}
+
+	public void setActivation(double activation) {
+		this.activation = activation;
+	}
+
+	public ArrayList<Neuron> getParents() {
+		return parents;
+	}
+
+	public ArrayList<Double> getWeights() {
+		return weights;
+	}
+	
+	
+	
 	
 	
 }
