@@ -16,14 +16,17 @@ public class Breeder {
 		for (int i = 0; i < populationSize; i++) {
 			Prisoner p = new Prisoner(Settings.COMMUNICATION_NEURONS, Settings.NEURONS_AMOUNT, Settings.CONNECTIVITY);
 			pool.add(p);
-		}		
+		}	
+		System.out.println("Generated random prisoner pool with " + populationSize + " prisoners.");
 	}
 	
 	public void startEvolution(int generations){
+		System.out.println("Starting evolution with " +  generations + " iterations.");
 		for (int i = 0; i < generations; i++) {
 			Director.updateFitness(pool);
 			selectFittest();
 			reproduceFittest();
+			System.out.println("Evolution round " + (i+1) + " finished.");
 		}
 	}
 	
