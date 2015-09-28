@@ -12,6 +12,16 @@ public class Prisoner {
 	
 	private double fitness;
 	
+	public Prisoner(ArrayList<Neuron> neurons, Neuron answerNeuron, ArrayList<Neuron> commInputNeurons,
+			ArrayList<Neuron> commOutputNeurons, double fitness) {
+		super();
+		this.neurons = neurons;
+		this.answerNeuron = answerNeuron;
+		this.commInputNeurons = commInputNeurons;
+		this.commOutputNeurons = commOutputNeurons;
+		this.fitness = fitness;
+	}
+
 	/**
 	 * 
 	 * @param communicationNeurons
@@ -29,9 +39,10 @@ public class Prisoner {
 		
 		generateConnections(connectivity);
 		//output and input neurons should not intersect
-		ArrayList<Neuron> commNeurons = getRandomNeurons(2*communicationNeurons);
-		this.commInputNeurons = (ArrayList<Neuron>) commNeurons.subList(0, communicationNeurons-1);
-		this.commOutputNeurons = (ArrayList<Neuron>) commNeurons.subList(communicationNeurons, 2*communicationNeurons-1);
+		ArrayList<Neuron> specialNeurons = getRandomNeurons(2*communicationNeurons + 1);
+		this.commInputNeurons = (ArrayList<Neuron>) specialNeurons.subList(0, communicationNeurons-1);
+		this.commOutputNeurons = (ArrayList<Neuron>) specialNeurons.subList(communicationNeurons, 2*communicationNeurons-1);
+		this.answerNeuron = specialNeurons.get(2*communicationNeurons);
 	}
 	
 	private ArrayList<Neuron> getRandomNeurons(int n) {
