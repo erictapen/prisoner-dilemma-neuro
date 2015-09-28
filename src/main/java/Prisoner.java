@@ -21,13 +21,7 @@ public class Prisoner {
 		this.commOutputNeurons = commOutputNeurons;
 		this.fitness = fitness;
 	}
-
-	/**
-	 * 
-	 * @param communicationNeurons
-	 * @param amount
-	 * @param connectivity
-	 */
+	
 	public Prisoner(int communicationNeurons, int amount, int connectivity) {
 		
 		int n = (int) Math.round(gaussian(amount, amount/2.0));
