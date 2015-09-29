@@ -16,6 +16,7 @@ public final class Settings {
 
 	public static final double MUTATION_RATE = 10;
 	public static final double WEIGHT_MUTATION_PROPABILITY = 0.7;
+	public static final double WEIGHT_MUTATION_INTENSITY = 0.5;
 	public static final double CONNECTION_MUTATION_PROPABILITY = 0.1;
 	public static final int NUMBER_OF_CONNECTION_MUTATIONS = 2;
 
