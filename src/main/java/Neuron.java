@@ -73,9 +73,9 @@ public class Neuron {
 		neurons.get(oldChildID).getParents().remove(neurons.get(oldChildID).getParents().indexOf(this.id));
 	}
 
-	public void mutateWeights() {
+	public void mutateWeights(double alpha) {
 		for (int i = 0; i < weights.size(); i++) {
-			weights.set(i, Math.random() * 2 - 1);
+			weights.set(i, weights.get(i) + alpha * (Math.random() * 2 - 1));
 		}
 	}	
 
