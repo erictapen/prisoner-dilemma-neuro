@@ -137,8 +137,20 @@ public class Prisoner {
 		}
 	}
 	
-	private double gaussian(double my, double sigma) {
-		return my;
+	public static double gaussian(double my, double sigma) {
+		double x1, x2, w, y, res;
+		 
+        do {
+        	x1 = 2.0 * Math.random() - 1.0;
+        	x2 = 2.0 * Math.random() - 1.0;
+        	w = x1 * x1 + x2 * x2;
+        } while (w >= 1.0);
+
+        w = Math.sqrt((-2.0 * Math.log(w)) / w);
+        y = x1 * w;
+        res = y * sigma + my;
+        
+		return res > 0 ? res : 0;
 	}
 
 	public ArrayList<Neuron> getNeurons() {
