@@ -13,7 +13,7 @@ public class Director {
 		int iterations = (int)(Settings.FIGHT_PERCENTAGE*pool.size());
 		if(recordComm) {
 			commData = new ArrayList<ArrayList<Double>>();
-			for(int i=0; i<iterations; i++) commData.add(new ArrayList<Double>());
+			for(int i=0; i<Settings.THINKING_STEPS; i++) commData.add(new ArrayList<Double>());
 		}
 		ArrayList<Integer> scores = new ArrayList<Integer>();
 		ArrayList<Integer> plays = new ArrayList<Integer>();
