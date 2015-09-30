@@ -12,6 +12,8 @@ public class Breeder {
 	public ArrayList<Double> minFitnessrecord = new ArrayList<Double>();
 	public ArrayList<Double> meanFitnessrecord = new ArrayList<Double>();
 	
+	private ArrayList<ArrayList<Double>> bla;
+	
 	
 	Comparator<Prisoner> prisonerCompare = new Comparator<Prisoner>() {
         @Override public int compare(Prisoner p1, Prisoner p2) {
@@ -36,12 +38,22 @@ public class Breeder {
 	public void startEvolution(int generations){
 		System.out.println("Starting evolution with " +  generations + " iterations.");
 		for (int i = 0; i < generations; i++) {
-			Director.updateFitness(pool);
+			Director.updateFitness(pool, false);
 			selectFittest();
 			reproduceFittest();
 			evaluate();
 			System.out.println("Evolution round " + (i+1) + " finished.");
 		}
+	}
+	
+	/** Do one evolution step
+	 * @param recordComm if true, do statistics about communication neurons. They are then accessible over getCommData()
+	 */
+	public void doEvolution(boolean recordComm){
+		Director.updateFitness(pool, recordComm);
+		selectFittest();
+		reproduceFittest();
+		evaluate();
 	}
 	
 	private void evaluate() {
