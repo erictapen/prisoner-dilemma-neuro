@@ -28,7 +28,8 @@ public class Prisoner {
 	
 	public Prisoner(int communicationNeurons, int amount, int connectivity) {
 		int n = (int) Math.round(gaussian(amount, amount/2.0));
-				
+		if(n < 2*communicationNeurons + 1) n = 2*communicationNeurons + 1; //We need at least this much neurons
+		
 		for (int i = 0; i < n; i++) {
 			initialActivations.add(Math.random() * 2 - 1);
 			Neuron neuron = new Neuron(initialActivations.get(i), i);
@@ -38,14 +39,10 @@ public class Prisoner {
 		generateConnections(connectivity);
 		//output and input neurons should not intersect
 		ArrayList<Neuron> specialNeurons = getRandomNeurons(2*communicationNeurons + 1);
-		for (int i = 0; i < specialNeurons.size(); i++) {
-			if (i < communicationNeurons - 1)
-				this.commInputNeurons.add(specialNeurons.get(i));
-			else if (i > communicationNeurons && i < 2*communicationNeurons - 1)
-				this.commOutputNeurons.add(specialNeurons.get(i));
-			else
-				this.answerNeuron = specialNeurons.get(i);
-		}
+		this.answerNeuron = specialNeurons.get(0);
+		for (int i = 1; i <= communicationNeurons; i++) this.commInputNeurons.add(specialNeurons.get(i));
+		for (int i = communicationNeurons + 1; i <= 2*communicationNeurons; i++) 
+			this.commOutputNeurons.add(specialNeurons.get(i));
 	}
 
 	private void generateConnections(int connectivity) {
