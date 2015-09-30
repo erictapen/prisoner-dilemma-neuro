@@ -100,8 +100,10 @@ public class Prisoner {
 			if (mutationType < Settings.WEIGHT_MUTATION_PROPABILITY) {
 				neurons.get((int) Math.random() * neurons.size()).mutateWeights(Settings.WEIGHT_MUTATION_INTENSITY);
 			} else if (mutationType > Settings.CONNECTION_MUTATION_PROPABILITY
-					&& mutationType < Settings.WEIGHT_MUTATION_PROPABILITY + Settings.CONNECTION_MUTATION_PROPABILITY){
-				neurons.get((int) Math.random() * neurons.size()).mutateConnections(neurons, Settings.NUMBER_OF_CONNECTION_MUTATIONS);
+					&& mutationType < Settings.WEIGHT_MUTATION_PROPABILITY 
+					+ Settings.CONNECTION_MUTATION_PROPABILITY){
+				neurons.get((int) Math.random() 
+						* neurons.size()).mutateConnections(neurons, Settings.NUMBER_OF_CONNECTION_MUTATIONS);
 			} else {
 				this.mutateInitialActivations();
 			}
