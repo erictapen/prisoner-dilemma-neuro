@@ -60,10 +60,7 @@ public class Prisoner {
 	}
 	
 	private ArrayList<Neuron> getRandomNeurons(int n) {
-		if(n > this.neurons.size()) {
-			System.out.println("There are too many Communication Neurons.");
-			n = this.neurons.size();
-		}
+		if(n > this.neurons.size()) n = this.neurons.size();
 		
 		ArrayList<Integer> numbers = getRandomNumbers();
 		

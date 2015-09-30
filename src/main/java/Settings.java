@@ -6,7 +6,7 @@ public final class Settings {
 	public final static int THINKING_STEPS = 100;
 	public final static double FIGHT_PERCENTAGE = 0.5;
 	
-	public final static int COMMUNICATION_NEURONS = 5;
+	public final static int COMMUNICATION_NEURONS = 1;  //please keep this at 1
 	public static final int NEURONS_AMOUNT = 50;
 	public static final int CONNECTIVITY = 5;
 	
