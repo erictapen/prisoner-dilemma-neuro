@@ -24,6 +24,9 @@ public class EntryPoint {
         //plot a communication chart from the last evolution step
         CommunicationVisualizer commViz = new CommunicationVisualizer(Director.getCommData(), 
         		Settings.EVOLUTION_STEPS, 100);
+        commViz.pack();
+        RefineryUtilities.centerFrameOnScreen(commViz);
+        commViz.setVisible(true);
 
 	}
 

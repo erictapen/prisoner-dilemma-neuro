@@ -25,17 +25,24 @@ public class CommunicationVisualizer extends ApplicationFrame{
      */ 
     public CommunicationVisualizer(ArrayList<ArrayList<Double>> valuesLists, int evGen, int yRes) { 
         super("Use of the communication channel between two random prisoners over game time"); 
+        int count=0;
+        for(ArrayList<Double> lx : valuesLists) {
+        	for(Double x : lx) count++;
+        }
+        double[][] heat = new double[3][valuesLists.size()*yRes];
+        int it=0;
+        for(int i=0; i<valuesLists.size(); i++) {
+        	ArrayList<Integer> distribution = new ArrayList<Integer>();
+        	for(Double x : valuesLists.get(i)) {
+        		
+        		if(distribution.contains((int)(x.doubleValue()*yRes))) System.out.println("bla"); //TODO
+        		heat[0][it] = (double)i;
+        		heat[1][it] = x.doubleValue();
+        		heat[2][it] = 1.0;
+        		it++;
+        	}
+        }
         
-        double heat[][] = new double[valuesLists.size()][yRes];
-        for (int i = 0; i < valuesLists.size(); i++) {
-			for (Double x : valuesLists.get(i)) {
-				double v = x.doubleValue() + 1.0;
-				v *= yRes*0.5;
-				if(v<0.0) v=0.0;
-				if(v>=yRes) v = yRes-1;
-				heat[i][(int)v] += 1.0;
-			}
-		}
         DefaultXYZDataset data = new DefaultXYZDataset();
         data.addSeries("Generation " + evGen, heat);
         JPanel chartPanel = new ChartPanel(createChart(data));
