@@ -127,7 +127,7 @@ public class Prisoner {
 		}
 	}*/
 
-	/** One way messag from this to p
+	/** One way message from this to p
 	 * @param p2
 	 */
 	public void communicateTo(Prisoner p) {
